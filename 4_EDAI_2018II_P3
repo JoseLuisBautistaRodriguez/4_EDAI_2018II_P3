@@ -1,0 +1,184 @@
+	//			||	4_EDAI_2018II_P3	||
+	
+		//			Pila de películas
+/*
+	This program is free software: you can redistribute it and/or modify  
+	* it under the terms of the GNU General Public License as published by  
+	* the Free Software Foundation, either version 3 of the License, or  
+	* (at your option) any later version. 
+	
+	* This program is distributed in the hope that it will be useful, 
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of  
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+	* GNU General Public License for more details.   
+	
+	* You should have received a copy of the GNU General Public License  
+	* along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+	
+  												* Author: Jorge A. Solano  
+	Modificaciones en el código:
+	El usuario designa el ingreso para n peliculas.
+	
+/*		1- Librerias		*///--------------------------------------------------------------
+
+	#include<stdio.h>	
+	#include <string.h>
+						
+/*--	1- Librerias   	  --*/
+							
+/*		2- Manejo de variables Globales		*///----------------------------------------------
+	
+	#define TAM 2
+	#define NUM_DIR 2
+	
+	int numeroDePeliculas = 0 ;
+	
+	struct pelicula
+	{
+		char nombre[20];
+		char genero[20];
+		short year;
+		short numDirectores;
+		//directo *directores[numDirectores];
+	};
+	
+	struct directo
+	{
+		char nombre[20];	
+	};
+	
+	struct peliculaInfo
+	{
+		struct pelicula datosGenerales;
+		//struct directo *nombres;
+		struct directo nombres[10];
+	};
+						
+/*--	2- Manejo de variables Glovales   	  --*/
+
+/*		3- Prototipado de funciones		*///--------------------------------------------------
+	
+	void llenarArreglo(struct peliculaInfo *);
+	void imprimirArreglo(struct peliculaInfo *);
+	
+/*--	3- Prototipado de funciones 	  --*/
+
+/*		4- Función principal (Descripción de uso)	*///--------------------------------------
+
+	int main()
+	{
+		
+		char valorDePaso[3];
+		
+		printf("Ingresa el n%cmero de Pel%cculas: ", 163,161);
+		fgets(valorDePaso, 3, stdin);
+		fflush(stdin);
+		numeroDePeliculas = atoi(valorDePaso);
+		
+		struct peliculaInfo baseDeDatos[numeroDePeliculas];
+		
+		//struct pelicula arreglo[TAM];
+		llenarArreglo (baseDeDatos);
+		imprimirArreglo (baseDeDatos);
+		
+		return 0;
+	}
+	
+/*--	4- Función principal 	--*/
+
+/*		5- Manejo de funciones		*///------------------------------------------------------
+
+	void llenarArreglo(struct peliculaInfo arreglo [numeroDePeliculas])
+	{
+		int iesimo, enesimo;
+		
+		for (iesimo=0 ; iesimo<numeroDePeliculas ; iesimo++)
+		{
+			struct peliculaInfo movie;
+			
+			printf("\n\n\t%c%c%c%c%c%c%c Pel%ccula %d %c%c%c%c%c%c%c\n", 219, 219, 219, 219, 219, 219, 219, 161, iesimo+1, 219, 219, 219, 219, 219, 219, 219);
+			printf("\tIngrese nombre pel%ccula: ", 161);
+			
+			setbuf(stdin, NULL);
+			
+			fgets( movie.datosGenerales.nombre, 20, stdin);
+			//scanf("%s", movie.datosGenerales.nombre);
+		//	getchar();
+			fflush(stdin);
+			
+			printf("\tIngrese g%cnero pel%ccula: ", 136,161);
+			setbuf(stdin, NULL);
+			scanf("%s", movie.datosGenerales.genero);
+			getchar();
+			printf("\tIngrese a%co pel%ccula: ", 164,161);
+			setbuf(stdin, NULL);
+			scanf("%d", &movie.datosGenerales.year);
+			printf("\tIngresa el n%cmero de director(es): ", 163);
+			scanf("%d", &movie.datosGenerales.numDirectores);
+			//movie.nombres = (struct directo*) malloc( /*movie.datosGenerales[iesimo].numDirectores ,*/ sizeof(struct directo));
+			
+			movie.nombres[movie.datosGenerales.numDirectores];
+			
+			//directores NombresDirectores[movie.datosGenerales.numDirectores];
+			//movie.numDirectores = NUM_DIR;
+			fflush(stdin);
+			for (enesimo=0 ; enesimo<movie.datosGenerales.numDirectores ; enesimo++)
+			{	
+				printf("\tIngrese director %d:", (enesimo+1));
+				//setbuf(stdin, NULL);
+				fgets( movie.nombres[enesimo].nombre , 20, stdin );
+				//scanf("%s", movie.nombres[enesimo]);
+				//getchar();
+				fflush(stdin);	
+			}
+			
+			arreglo[iesimo] = movie;
+		}
+	}
+	
+/*--	5- Manejo de funciones 	  --*/
+/*		6- Manejo de funciones		*///------------------------------------------------------
+
+	void imprimirArreglo(struct peliculaInfo arreglo[numeroDePeliculas])
+	{
+		int iesimo, enesimo;
+		printf("\n\t####### Contenido del arreglo #######\n");
+
+		for (iesimo=numeroDePeliculas-1 ; iesimo >= 0 ; iesimo--)
+		{
+			printf("\n\t####### Pel%ccula %d #######\n", 161,(iesimo+1));
+			printf("\n\tPEL%cCULA: %s\n", 214, arreglo[iesimo].datosGenerales.nombre);
+			printf("\tG%cNERO: %s\n", 144, arreglo[iesimo].datosGenerales.genero);
+			printf("\tA%cO: %d\n", 165, arreglo[iesimo].datosGenerales.year);
+			printf("\tDIRECTOR(ES):\n");
+			
+			if ( arreglo[iesimo].datosGenerales.numDirectores == 1 )
+			{
+				printf("\t%s\n", arreglo[iesimo].nombres[0]);
+			}else if ( arreglo[iesimo].datosGenerales.numDirectores != 1 )
+			{
+				for (enesimo=0 ; enesimo < arreglo[iesimo].datosGenerales.numDirectores ; enesimo++)	
+				{
+					printf("\t%s\n", arreglo[iesimo].nombres[enesimo].nombre );
+				}	
+			}
+
+		}
+	}
+
+/*		6- Manejo de funciones		*///------------------------------------------------------
+/*
+		||		Datos Generales del archivo:		||
+	------------------------------------------------------------------------------------------
+	Universidad Nacional Autónoma de México
+	Facultad de Ingeniería
+	1227 Estructura de Datos y Algoritmos
+	Grupo: 09
+	
+	Práctica: 03
+	 
+	Autor: Bautista Rodríguez José Luis
+	Fecha de inicio: 08/05/2018
+	------------------------------------------------------------------------------------------	||
+
+*/
